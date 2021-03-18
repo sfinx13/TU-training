@@ -6,7 +6,7 @@ Création d'un framework afin de mettre en pratique les principes SOLID et les T
 ## Lancement de l'application
 
 ```bash
-bin/phpunit
+bin/run
 ```
 
 
