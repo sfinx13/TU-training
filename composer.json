@@ -1,0 +1,19 @@
+{
+    "name": "qamarh/tu-training",
+    "description": "Repo pour entrainement sur les TU",
+    "authors": [
+        {
+            "name": "qamar-h",
+            "email": "hayat.qamar@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "App\\Tests\\": "test/"
+        }
+    },
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
