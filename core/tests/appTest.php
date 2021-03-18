@@ -1,16 +1,18 @@
 <?php 
 
-namespace App\Tests;
+namespace Core\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Core\App;
+use Core\Component\Http\Factory\RequestFactory;
 
 class AppTest extends TestCase
 {
 
     public function testRun()
     {   
-        $app = new App;
+        $request = RequestFactory::create();
+        $app = new App($request);
         $this->assertSame($app->run(),'Mon application');
     }
     

@@ -10,11 +10,13 @@
     "autoload": {
         "psr-4": {
             "Core\\": "core/",
+            "Core\\Tests\\": "core/tests/",
             "App\\": "src/",
-            "App\\Tests\\": "test/"
+            "App\\Tests\\": "tests/"
         }
     },
     "require": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "symfony/var-dumper": "^5.2"
     }
 }
