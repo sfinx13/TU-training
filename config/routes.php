@@ -2,5 +2,8 @@
 
 
 return [
-    //routes
+   /* "/" => [
+        'name' => "home",
+        "controller" => "App\Controller\HomeController::index",
+    ]*/
 ];

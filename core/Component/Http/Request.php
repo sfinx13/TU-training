@@ -27,25 +27,35 @@ class Request implements RequestInterface
 
     public function getAll(): array
     {
-        $all = [];
-        $all['query'] = $this->query;
-        $all['request'] = $this->request;
-        $all['attributes'] = $this->attributes;
-        $all['cookies'] = $this->cookies;
-        $all['files'] = $this->files;
-        $all['server'] = $this->server;
+        return [
+            'query' => $this->query,
+            'request' => $this->request,
+            'attributes' => $this->attributes,
+            'cookies' => $this->cookies,
+            'files' => $this->files,
+            'server' => $this->server,
+        ];
 
-        return $all;
     }
 
 
     public function getUri(): string
     {
-        $uri = '/';
-        if (isset($this->server['REQUEST_URI'])) {
-            $uri = $this->server['REQUEST_URI'];
+        if (!isset($this->server['REQUEST_URI'])) {
+            throw new \Exception('Unable to retrieve URI');
         }
-        return $uri;
+
+        return $this->server['REQUEST_URI'];
+    }
+
+
+    public function getMethod()
+    {
+        if (!isset($this->server['REQUEST_METHOD'])) {
+            throw new \Exception('Unable to retrieve REQUEST METHOD');
+        }
+
+        return $this->server['REQUEST_METHOD'];
     }
 
 
