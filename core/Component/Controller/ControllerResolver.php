@@ -3,6 +3,7 @@
 namespace Core\Component\Controller;
 
 use Core\Component\Routing\Route;
+use Core\Exception\ControllerException;
 
 class ControllerResolver
 {
@@ -11,14 +12,27 @@ class ControllerResolver
     {   
         
         $controllerStringParse = explode('::',$route->getController());
-        
-        if (count($controllerStringParse) > 1) {
-            if (class_exists($controllerStringParse[0]) && method_exists(new $controllerStringParse[0],$controllerStringParse[1])) {
-                return [new $controllerStringParse[0],$controllerStringParse[1]];
-            }
+
+        if (count($controllerStringParse) === 0) {
+            throw new ControllerException('Cannot set controller');
         }
 
-        throw new \Exception('Controller Not found');
+        $class = $controllerStringParse[0];
+        $method = $controllerStringParse[1];
+
+        if (!class_exists($class)) {
+            throw new ControllerException('"' . $class . '" class not found');
+        }
+
+        if (!method_exists(new $class,$method)) {
+            throw new ControllerException('method "' . $method . '" not found in "' . $class .'"');
+        }
+
+        return [
+            $class,
+            $method
+        ];
+        
     }
 
 

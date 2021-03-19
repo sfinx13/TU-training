@@ -3,8 +3,12 @@
 namespace Core;
 use Core\Component\Http\Interfaces\RequestInterface;
 use Core\Component\Controller\ControllerResolver;
-use Core\Component\Routing\RouteResolverInterface;
-use Core\Component\Routing\RouteCollection;
+use Core\Component\Routing\{
+    RouteResolverInterface,
+    RouteCollection
+};
+use Core\Exception\{ControllerException,RouteException};
+
 
 class App 
 {
@@ -38,8 +42,8 @@ class App
 
         }
         catch(\Exception $e) {
-            header('HTTP/1.0 404 Not Found');
-            print_r('Not found 404');
+            header('HTTP/1.0 ' . $e->getCode() . ' Not Found');
+            print_r('Not found ' . $e->getCode());
             exit;
         }
        
