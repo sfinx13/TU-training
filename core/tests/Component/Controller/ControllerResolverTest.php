@@ -1,21 +1,22 @@
 <?php 
 
-namespace Core\Tests;
+namespace Core\Tests\Component\Controller;
 
-use Core\Component\Resolver\ControllerResolver;
+use Core\Component\Controller\ControllerResolver;
+use Core\Component\Routing\Route;
 use PHPUnit\Framework\TestCase;
 
 class ControllerResolverTest extends TestCase
 {   
     
-    private $defaultRoute = [
-         "name" => "default",
-        "controller" => "Core\Controller\DefaultController::index"
-    ];
+    public function defaultRoute()
+    {
+        return new Route("default","/","Core\Component\Controller\DefaultController::index");
+    }
 
     private function getCallable() 
     {
-        return (new ControllerResolver)->resolve($this->defaultRoute);
+        return (new ControllerResolver)->resolve($this->defaultRoute());
     }
 
     public function testResolveIsArray()
@@ -32,8 +33,6 @@ class ControllerResolverTest extends TestCase
     {
         $this->assertIsCallable($this->getCallable());
     }
-
-
 
 
 }

@@ -1,14 +1,16 @@
 <?php
 
-namespace Core\Component\Resolver;
+namespace Core\Component\Controller;
+
+use Core\Component\Routing\Route;
 
 class ControllerResolver
 {
 
-    public function resolve(array $route): array
+    public function resolve(Route $route): array
     {   
         
-        $controllerStringParse = explode('::',$route["controller"]);
+        $controllerStringParse = explode('::',$route->getController());
         
         if (count($controllerStringParse) > 1) {
             if (class_exists($controllerStringParse[0]) && method_exists(new $controllerStringParse[0],$controllerStringParse[1])) {

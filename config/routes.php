@@ -1,9 +1,3 @@
 <?php 
 
-
-return [
-   /* "/" => [
-        'name' => "home",
-        "controller" => "App\Controller\HomeController::index",
-    ]*/
-];
+$routes->addRouteDirectly('home','/','App\Controller\HomeController::index');
