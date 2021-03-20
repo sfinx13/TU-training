@@ -5,7 +5,7 @@ namespace Core\Component\Routing;
 use Core\Component\Http\Interfaces\RequestInterface;
 use Core\Component\Routing\Route;
 use Core\Component\Routing\RouteCollection;
-use Core\Exception\RouteException;
+use Core\Component\Routing\RouteException;
 
 class RouteResolver implements RouteResolverInterface
 {

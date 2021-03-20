@@ -3,9 +3,9 @@
 namespace Core\Component\Controller;
 
 use Core\Component\Routing\Route;
-use Core\Exception\ControllerException;
+use Core\Component\Controller\ControllerException;
 
-class ControllerResolver
+class ControllerResolver implements ControllerResolverInterface
 {
 
     public function resolve(Route $route): array
@@ -28,10 +28,7 @@ class ControllerResolver
             throw new ControllerException('method "' . $method . '" not found in "' . $class .'"');
         }
 
-        return [
-            $class,
-            $method
-        ];
+        return [new $class,$method];
         
     }
 

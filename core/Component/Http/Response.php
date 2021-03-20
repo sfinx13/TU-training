@@ -101,7 +101,7 @@ class Response implements ResponseInterface
     public function __toString()
     {
         return
-            sprintf('HTTP/%s %s %s', $this->statusCode,)."\r\n".
+            sprintf('HTTP/%s', $this->statusCode)."\r\n".
             //$this->headers."\r\n".
             $this->getContent();
     }

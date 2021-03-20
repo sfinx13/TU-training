@@ -9,6 +9,7 @@ use Core\Component\Routing\{
     RouteResolver
 };
 use Core\App;
+use Core\Component\Controller\ArgumentResolver;
 
 class AppFactory
 {
@@ -21,6 +22,7 @@ class AppFactory
             RequestFactory::create(),
             new RouteResolver,
             new ControllerResolver,
+            new ArgumentResolver,
             $this->routeInstance()
         );
     }

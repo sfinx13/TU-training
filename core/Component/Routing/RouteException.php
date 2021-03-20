@@ -1,6 +1,6 @@
 <?php 
 
-namespace Core\Exception;
+namespace Core\Component\Routing;
 
 use Core\Component\Http\Response;
 
