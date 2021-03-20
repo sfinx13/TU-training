@@ -2,6 +2,8 @@
 
 namespace Core\Component\Controller;
 
+use Core\AppFactory;
+use Core\Component\Config\ConfigLoader;
 use Core\Component\Http\Response;
 
 abstract class BaseController
@@ -16,11 +18,19 @@ abstract class BaseController
     protected function renderFromTemplate(string $templatePath,array $params = [],$statusCode = Response::HTTP_OK)
     {
 
+        if (!isset($this->getConfig('views')['path'])) {
+            throw new \Exception('The directory for the views is not defined in config/app.php');
+        }
+
+        if (!file_exists($this->getConfig('views')['path'])) {
+            throw new \Exception($this->getConfig('views')['path'] . ' does not exist');
+        }
+   
         extract($params);
 
         ob_start();
         
-            include_once dirname(__DIR__) . '/../../views/' . $templatePath . '.php';
+            include_once $this->getConfig('views')['path'] . '/' . $templatePath . '.php';
             $html = ob_get_contents();
             ob_clean();
 
@@ -28,6 +38,13 @@ abstract class BaseController
 
         printf(new Response($html,$statusCode));
 
+    }
+
+
+    protected function getConfig(string $key)
+    {
+        $configLoader = (new AppFactory)->configLoaderInstance();
+        return $configLoader->get($key);
     }
 
 
