@@ -21,6 +21,12 @@ class HomeController extends BaseController
     }
 
 
+    public function test()
+    {
+        dd('test');
+    }
+
+
 
 }
 

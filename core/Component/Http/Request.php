@@ -45,7 +45,8 @@ class Request implements RequestInterface
             throw new \Exception('Unable to retrieve URI');
         }
 
-        return $this->server['REQUEST_URI'];
+        $uri = explode('?',$this->server['REQUEST_URI']);
+        return $uri[0];
     }
 
 
