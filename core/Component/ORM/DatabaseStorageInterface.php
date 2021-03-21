@@ -7,7 +7,6 @@ interface DatabaseStorageInterface
 
     public function disconnect();
     
-    /* precompilation de la requete & protection injection sql */
     public function prepare(string $sql, array $options);
 
     public function execute(array $parameters);
