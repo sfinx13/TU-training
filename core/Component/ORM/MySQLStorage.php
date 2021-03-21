@@ -4,6 +4,7 @@ namespace Core\ORM;
 
 use PDO;
 use PDOException;
+use PDOStatement;
 use RuntimeException;
 
 class MySQLStorage implements DatabaseStorageInterface 
@@ -24,7 +25,7 @@ class MySQLStorage implements DatabaseStorageInterface
         $this->config['options'] = $options;
     }
 
-    public function getStatement() 
+    public function getStatement(): PDOStatement
     {
         if($this->statement === null) {
             throw new PDOException('error statement');
@@ -81,7 +82,7 @@ class MySQLStorage implements DatabaseStorageInterface
         }
     }
 
-    public function fetch(int $fetchMode , $cursorOrientation = null, $cursorOffset = null) 
+    public function fetch(int $fetchMode , int $cursorOrientation = null, int $cursorOffset = null): array
     {
         if($fetchMode === null) {
             $fetchMode = $this->fetchMode;
@@ -94,20 +95,20 @@ class MySQLStorage implements DatabaseStorageInterface
         }
     }
 
-    public function fetchAll(int $fetchMode)
+    public function fetchAll(int $fetchMode): array
     {
         if($fetchMode === null) {
             $fetchMode = $this->fetchMode;
         }
 
         try {
-            return $this->getStatement()->fetchMode($fetchMode);
+            return $this->getStatement()->fetchAll($fetchMode);
         } catch(PDOException $exception) {
             throw new PDOException($exception->getMessage());
         }
     }
 
-    public function getLastInsertedId($name = null) 
+    public function getLastInsertedId($name = null): string
     {
         $this->connect();
         return $this->connection->lastInsertedId($name);
