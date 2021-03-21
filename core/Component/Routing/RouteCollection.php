@@ -4,7 +4,6 @@ namespace Core\Component\Routing;
 
 use Core\Component\Routing\Route;
 
-
 class RouteCollection
 {
 

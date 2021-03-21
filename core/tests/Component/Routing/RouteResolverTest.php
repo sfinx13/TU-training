@@ -3,51 +3,64 @@
 namespace Core\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Core\Component\Http\Request;
 use Core\Component\Routing\RouteResolver;
-use Core\Component\Routing\RouteCollection;
 
 class RouteResolverTest extends TestCase
 {
 
-    private function routes()
+    private function routesForTest()
     {
-        $routes = new RouteCollection;
-        $routes->addRouteDirectly('test','/test','ControllerFortesting::test');
+        $routes = [];
+        $testRouteMock = $this->getMockBuilder('Core\Component\Routing\Route')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $testRouteMock->method('getName')->willReturn('test');
+        $testRouteMock->method('getUri')->willReturn('/test');
+        $testRouteMock->method('getController')
+            ->willReturn('Fake\Controller\TestController::test');
+
+        $routes[$testRouteMock->getName()] = $testRouteMock;
         return $routes;
     }
 
-    private function getRouteResolved()
+    private function router()
     {
-        $_SERVER['REQUEST_URI'] = '/';
-        $request = new Request([],[],[],[],[],$_SERVER);
-        return (new RouteResolver)->resolve($request,$this->routes());
+        $router = $this->getMockBuilder("Core\Component\Routing\RouteCollection")
+                ->getMock();
+        $router->method('getAll')->willReturn($this->routesForTest());
+
+        return $router;
     }
 
-    private function getRouteResolvedFake()
+    private function requestMock()
     {
-        $_SERVER['REQUEST_URI'] = '/fake';
-        $request = new Request([],[],[],[],[],$_SERVER);
-
-        return (new RouteResolver)->resolve($request,$this->routes());
+        return $this->getMockBuilder('Core\Component\Http\Request')
+            ->getMock();
     }
 
     public function testResolveIsObject()
     {
-        $this->assertIsObject($this->getRouteResolved());
+        $request = $this->requestMock();
+        $request->method('getUri')->willReturn('/test');
+        $resolve = (new RouteResolver)
+            ->resolve($request,$this->router());
+
+        $this->assertIsObject($resolve);
     }
 
     public function testResolveIsThrowError()
     {
         try{
-            $this->getRouteResolvedFake();
+            $request = $this->requestMock();
+            $request->method('getUri')->willReturn('/fake');
+            (new RouteResolver)->resolve($request,$this->router());
         }
         catch(\Exception $e) {
             $this->assertEquals($e->getMessage(),"Route Not found");
         }
     }
 
-    
 
 
 }
