@@ -1,4 +1,4 @@
 #!/bin/bash
 
-./vendor/bin/phpunit --colors $PWD/core/tests/
-./vendor/bin/phpunit --colors $PWD/tests/
+./vendor/bin/phpunit --colors --testdox $PWD/core/tests/
+./vendor/bin/phpunit --colors --testdox $PWD/tests/
