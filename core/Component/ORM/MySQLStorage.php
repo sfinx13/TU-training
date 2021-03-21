@@ -1,13 +1,8 @@
-<?php 
+<?php
 
-namespace Core\ORM;
+namespace Core\Component\ORM;
 
-use PDO;
-use PDOException;
-use PDOStatement;
-use RuntimeException;
-
-class MySQLStorage implements DatabaseStorageInterface 
+class MySQLStorage implements DatabaseStorageInterface
 {
     private $config = [];
 
@@ -15,7 +10,7 @@ class MySQLStorage implements DatabaseStorageInterface
 
     private $statement;
 
-    private $fetchMode = PDO::FETCH_ASSOC;
+    private $fetchMode = \PDO::FETCH_ASSOC;
 
     public function __construct(string $dsn, string $username, string $password, array $options = [])
     {
@@ -25,30 +20,32 @@ class MySQLStorage implements DatabaseStorageInterface
         $this->config['options'] = $options;
     }
 
-    public function getStatement(): PDOStatement
+    public function getStatement(): \PDOStatement
     {
-        if($this->statement === null) {
-            throw new PDOException('error statement');
+        if ($this->statement === null) {
+            throw new \PDOException('error statement');
         }
 
         return $this->statement;
     }
 
-    public function connect(): void 
+    public function connect(): void
     {
         if ($this->connection) {
             return;
         }
 
         try {
-            $this->connection = new PDO($this->config['dsn'], 
-            $this->config['username'], 
-            $this->config['password'],
-            $this->config['options']);
+            $this->connection = new \PDO(
+                $this->config['dsn'],
+                $this->config['username'],
+                $this->config['password'],
+                $this->config['options']
+            );
 
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
-            throw new PDOException($exception->getMessage());
+            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        } catch (\PDOException $exception) {
+            throw new \PDOException($exception->getMessage());
         }
     }
 
@@ -64,9 +61,8 @@ class MySQLStorage implements DatabaseStorageInterface
             $this->statement = $this->connection->prepare($sql, $options);
 
             return $this;
-        
-        } catch(PDOException $exception) {
-            throw new PDOException($exception->getMessage());
+        } catch (\PDOException $exception) {
+            throw new \PDOException($exception->getMessage());
         }
     }
 
@@ -74,37 +70,36 @@ class MySQLStorage implements DatabaseStorageInterface
     {
         try {
             $this->getStatement()->execute($parameters);
-        
-            return $this;
 
-        } catch(PDOException $exception) {
-            throw new PDOException($exception->getMessage());
+            return $this;
+        } catch (\PDOException $exception) {
+            throw new \PDOException($exception->getMessage());
         }
     }
 
-    public function fetch(int $fetchMode , int $cursorOrientation = null, int $cursorOffset = null): array
+    public function fetch(int $fetchMode, int $cursorOrientation = null, int $cursorOffset = null): array
     {
-        if($fetchMode === null) {
+        if ($fetchMode === null) {
             $fetchMode = $this->fetchMode;
         }
 
         try {
             return $this->getStatement()->fetch($fetchMode, $cursorOrientation, $cursorOffset);
-        } catch(PDOException $exception) {
-            throw new PDOException($exception->getMessage());
+        } catch (\PDOException $exception) {
+            throw new \PDOException($exception->getMessage());
         }
     }
 
     public function fetchAll(int $fetchMode): array
     {
-        if($fetchMode === null) {
+        if ($fetchMode === null) {
             $fetchMode = $this->fetchMode;
         }
 
         try {
             return $this->getStatement()->fetchAll($fetchMode);
-        } catch(PDOException $exception) {
-            throw new PDOException($exception->getMessage());
+        } catch (\PDOException $exception) {
+            throw new \PDOException($exception->getMessage());
         }
     }
 
@@ -113,5 +108,4 @@ class MySQLStorage implements DatabaseStorageInterface
         $this->connect();
         return $this->connection->lastInsertedId($name);
     }
-
 }
