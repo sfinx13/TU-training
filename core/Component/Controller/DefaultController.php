@@ -7,7 +7,10 @@ class DefaultController extends BaseController
 
     public function index()
     {
-        echo '<h1>Page par défaut</h1><p>Merci de créer votre première route.</p>';
+        $title = "Our framework";
+        $description = "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.";
+        require_once dirname(__DIR__) . '/../views/default.php';
     }
+
 
 }

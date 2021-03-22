@@ -1,5 +1,9 @@
-<?php 
+<?php
 
-$routes->addRouteDirectly('home','/','App\Controller\HomeController::index');
 
-$routes->addRouteDirectly('test','/test','App\Controller\HomeController::test');
+$router->add('home','/','App\Controller\HomeController::index');
+
+$router->add('about','/about','App\Controller\AboutController::index');
+
+$router->add('teams','/teams','App\Controller\TeamsController::index');
+

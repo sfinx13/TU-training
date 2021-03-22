@@ -18,6 +18,7 @@ class PDOStorage implements DatabaseStorageInterface
         $this->config['username'] = $username;
         $this->config['password'] = $password;
         $this->config['options'] = $options;
+
     }
 
     public function getStatement(): \PDOStatement

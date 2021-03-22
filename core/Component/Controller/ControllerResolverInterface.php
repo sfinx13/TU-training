@@ -6,5 +6,5 @@ use Core\Component\Routing\Route;
 
 interface ControllerResolverInterface
 {
-    public function resolve(Route $route): array;
+    public function resolve(Route $route): callable;
 }

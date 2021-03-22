@@ -18,19 +18,19 @@ abstract class BaseController
     protected function renderFromTemplate(string $templatePath,array $params = [],$statusCode = Response::HTTP_OK)
     {
 
-        if (!isset($this->getConfig('views')['path'])) {
+        if (!isset($this->getConfig(ConfigLoader::VIEW_INDEX)['path'])) {
             throw new \Exception('The directory for the views is not defined in config/app.php');
         }
 
-        if (!file_exists($this->getConfig('views')['path'])) {
-            throw new \Exception($this->getConfig('views')['path'] . ' does not exist');
+        if (!file_exists($this->getConfig(ConfigLoader::VIEW_INDEX)['path'])) {
+            throw new \Exception($this->getConfig(ConfigLoader::VIEW_INDEX)['path'] . ' does not exist');
         }
    
         extract($params);
 
         ob_start();
         
-            include_once $this->getConfig('views')['path'] . '/' . $templatePath . '.php';
+            include_once $this->getConfig(ConfigLoader::VIEW_INDEX)['path'] . '/' . $templatePath . '.php';
             $html = ob_get_contents();
             ob_clean();
 
@@ -46,6 +46,7 @@ abstract class BaseController
         $configLoader = (new AppFactory)->configLoaderInstance();
         return $configLoader->get($key);
     }
+
 
 
 }

@@ -13,7 +13,7 @@ class RouteException extends \Exception
   
   public function __toString()
   {
-    return $this->message;
+     return $this->message;
   }
 
 

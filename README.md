@@ -1,16 +1,14 @@
-## Project
+### Project
+Creation of a framework in order to put into practice the TUs and the SOLID principles
 
-Création d'un framework afin de mettre en pratique les principes SOLID et les TU
-
-
-## Lancement de l'application
+### Start the application
 
 ```bash
 bin/run
 ```
 
 
-## Lancement des tests
+### Start the tests
 
 ```bash
 bin/phpunit

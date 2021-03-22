@@ -9,7 +9,7 @@ class HomeController extends BaseController
 {
 
     public function index(Request $request)
-    {   
+    {
 
         $params = [
             'title' => 'Our framework',
@@ -17,15 +17,13 @@ class HomeController extends BaseController
         ];
     
         $this->renderFromTemplate("home/index",$params);
-
     }
 
 
-    public function test()
+    public function about(string $name,int $age)
     {
-        dd('test');
+        dd('Votre nom est:  ' . $name . ', Votre âge est : ' . $age .' ans');
     }
-
 
 
 }

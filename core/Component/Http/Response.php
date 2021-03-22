@@ -77,33 +77,25 @@ class Response implements ResponseInterface
     private $statutCode;
 
 
-
     public function __construct($content,int $statutCode = self::HTTP_OK)
     {
         $this->content = $content;
         $this->statutCode = $statutCode;
     }
 
-
-
     public function getContent()
     {
         return $this->content;
     }
-
 
     public function getStatutCode(): int
     {
         return $this->statutCode;
     }
 
-
     public function __toString()
     {
-        return
-            sprintf('HTTP/%s', $this->statusCode)."\r\n".
-            //$this->headers."\r\n".
-            $this->getContent();
+        return $this->getContent();
     }
 
    

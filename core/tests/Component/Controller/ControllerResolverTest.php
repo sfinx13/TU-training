@@ -8,30 +8,38 @@ use PHPUnit\Framework\TestCase;
 
 class ControllerResolverTest extends TestCase
 {   
-    
-    public function defaultRoute()
+
+    private $controllerResolver;
+
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
-        return new Route("default","/","Core\Component\Controller\DefaultController::index");
+        parent::__construct($name, $data, $dataName);
+
+        $this->controllerResolver = new ControllerResolver;
     }
 
-    private function getCallable() 
+    public function testControllerResolveReturnAControllerCallable()
     {
-        return (new ControllerResolver)->resolve($this->defaultRoute());
+      $route = new Route(
+          'default',
+                '/',
+                'Core\Component\Controller\DefaultController::index'
+      );
+      $controller = $this->controllerResolver->resolve($route);
+      $this->assertIsCallable($controller);
+
     }
 
-    public function testResolveIsArray()
-    {   
-        $this->assertIsArray($this->getCallable());
-    }
-
-    public function testResolveCount()
+    public function testControllerResolveReturnAClosureCallable()
     {
-        $this->assertEquals(2,count($this->getCallable()));
-    }
-
-    public function testResolveIsCallable()
-    {
-        $this->assertIsCallable($this->getCallable());
+        $func =  function(){echo 'Test';};
+        $route = new Route(
+            'default',
+            '/',
+            $func
+        );
+        $controller = $this->controllerResolver->resolve($route);
+        $this->assertIsCallable($controller);
     }
 
 

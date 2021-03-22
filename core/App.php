@@ -9,7 +9,7 @@ use Core\Component\Controller\ControllerException;
 use Core\Component\Http\Interfaces\RequestInterface;
 use Core\Component\Controller\ArgumentResolverInterface;
 use Core\Component\Controller\ControllerResolverInterface;
-use Core\Component\Routing\{RouteResolverInterface,RouteCollection};
+use Core\Component\Routing\{RouteResolverInterface, RouterInterface};
 
 
 class App 
@@ -19,7 +19,7 @@ class App
     private $routeResolver;
     private $controllerResolver;
     private $argumentResolver;
-    private $routes;
+    private $router;
     private $configLoader;
 
     public function __construct(
@@ -27,7 +27,7 @@ class App
         RouteResolverInterface $routeResolver,
         ControllerResolverInterface $controllerResolver,
         ArgumentResolverInterface $argumentResolver, 
-        RouteCollection $routes,
+        RouterInterface $router,
         ConfigLoader $configLoader
     )
     {
@@ -35,7 +35,7 @@ class App
         $this->routeResolver = $routeResolver;
         $this->controllerResolver = $controllerResolver;
         $this->argumentResolver = $argumentResolver;
-        $this->routes = $routes;
+        $this->router = $router;
         $this->configLoader = $configLoader;
     }
 
@@ -44,14 +44,14 @@ class App
 
         try{
 
-            $routes = $this->routes;
+            $router = $this->router;
             require_once $this->configLoader->routes('path');
-  
-            $route = $this->routeResolver->resolve($this->request,$routes);
+
+            $route = $this->routeResolver->resolve($this->request,$router);
 
             $controller = $this->controllerResolver->resolve($route);
 
-            $arguments = $this->argumentResolver->resolve($controller);
+            $arguments = $this->argumentResolver->resolve($controller,$route);
 
             call_user_func_array($controller,$arguments);
 

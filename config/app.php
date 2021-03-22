@@ -13,4 +13,11 @@ return [
         'path' => $dirname  . '/views'
     ],
 
+    'db' => [
+        'dsn' => 'localhost:3335',
+        'username' => 'root',
+        'password' => 'root',
+        'options' => [],
+    ]
+
 ];

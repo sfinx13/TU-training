@@ -10,16 +10,10 @@ use Core\Component\Routing\RouteException;
 class RouteResolver implements RouteResolverInterface
 {
 
-    public function resolve(RequestInterface $request,RouteCollection $routes): ?Route
+    public function resolve(RequestInterface $request,RouterInterface $router): ?Route
     {   
 
-        $routeRequested = null;
-
-        foreach ($routes->getAll() as $route) {
-            if ($route->getUri() == $request->getUri()) {
-                $routeRequested = $route;
-            }
-        }
+        $routeRequested = $router->match($request);
 
         if ($routeRequested === null && $request->getUri() == "/") {
             return new Route("default","/","Core\Component\Controller\DefaultController::index");
