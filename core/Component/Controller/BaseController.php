@@ -29,7 +29,9 @@ abstract class BaseController
         extract($params);
 
         ob_start();
-        
+
+            //A faire : Vérifier si l'extension est dèja mentionné sinon mettre .php
+
             include_once $this->getConfig(ConfigLoader::VIEW_INDEX)['path'] . '/' . $templatePath . '.php';
             $html = ob_get_contents();
             ob_clean();

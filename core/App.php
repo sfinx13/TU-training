@@ -57,9 +57,24 @@ class App
 
         }
         catch(\Exception $e) {
-            printf(new Response($e->getMessage(),$e->getCode()));
+
+            $message = $e->getMessage();
+
+            $projectDir = str_replace('/public','',$_SERVER['DOCUMENT_ROOT']);
+            $errorViews = $projectDir . '/core/views/errors/' . $e->getCode() . '.php';
+
+            if (file_exists($errorViews)) {
+                ob_start();
+                    include_once $errorViews;
+                    $message = ob_get_contents();
+                    ob_clean();
+                ob_flush();
+            }
+
+            print(new Response($message,$e->getCode()));
+
         }
-       
+
     }
 
 

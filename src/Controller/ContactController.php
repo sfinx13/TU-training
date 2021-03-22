@@ -4,14 +4,13 @@ namespace App\Controller;
 
 use Core\Component\Controller\BaseController;
 
-class TeamsController extends BaseController
+class ContactController extends BaseController
 {
 
     public function index()
     {
-        $this->renderFromTemplate('teams/index');
+        $this->renderFromTemplate('contact/index');
     }
 
 
 }
-

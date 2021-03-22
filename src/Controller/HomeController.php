@@ -10,10 +10,9 @@ class HomeController extends BaseController
 
     public function index(Request $request)
     {
-
         $params = [
             'title' => 'Our framework',
-            'description' => 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.'
+            'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
         ];
     
         $this->renderFromTemplate("home/index",$params);
