@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Core\Component\EventEmitter\Event\{ArgumentEvent, ControllerEvent, RequestEvent, ResponseEvent, RouteEvent};
+use Core\Component\EventEmitter\EventEmitterInterface;
 use Core\Component\Http\Response;
 use Core\Component\Config\ConfigLoader;
 use Core\Component\Routing\RouteException;
@@ -20,6 +22,7 @@ class App
     private $controllerResolver;
     private $argumentResolver;
     private $router;
+    private $eventEmitter;
     private $configLoader;
 
     public function __construct(
@@ -28,6 +31,7 @@ class App
         ControllerResolverInterface $controllerResolver,
         ArgumentResolverInterface $argumentResolver, 
         RouterInterface $router,
+        EventEmitterInterface $eventEmitter,
         ConfigLoader $configLoader
     )
     {
@@ -36,6 +40,7 @@ class App
         $this->controllerResolver = $controllerResolver;
         $this->argumentResolver = $argumentResolver;
         $this->router = $router;
+        $this->eventEmitter = $eventEmitter;
         $this->configLoader = $configLoader;
     }
 
@@ -44,14 +49,21 @@ class App
 
         try{
 
+            $eventEmitter = $this->eventEmitter;
+            require_once $this->configLoader->events('path');
+            $eventEmitter->emit('core.request',new RequestEvent($this->request));
+
             $router = $this->router;
             require_once $this->configLoader->routes('path');
 
             $route = $this->routeResolver->resolve($this->request,$router);
+            $eventEmitter->emit('core.route',new RouteEvent($route));
 
             $controller = $this->controllerResolver->resolve($route);
+            $eventEmitter->emit('core.controller',new ControllerEvent($controller));
 
             $arguments = $this->argumentResolver->resolve($controller,$route);
+            $eventEmitter->emit('core.argument',new ArgumentEvent($arguments));
 
             call_user_func_array($controller,$arguments);
 

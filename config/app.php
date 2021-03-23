@@ -9,6 +9,10 @@ return [
         'path' => $dirname . '/config/routes.php',
     ],
 
+    'events' => [
+        'path' => $dirname . '/config/events.php',
+    ],
+
     'views' => [
         'path' => $dirname  . '/views'
     ],

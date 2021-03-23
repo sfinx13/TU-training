@@ -2,17 +2,13 @@
 
 namespace Core;
 
+use Core\Component\EventEmitter\EventEmitter;
 use Core\Component\Http\Factory\RequestFactory;
 use Core\Component\Controller\ControllerResolver;
-use Core\Component\ORM\PDOStorage;
-use Core\Component\Routing\{
-    RouteCollection,
-    RouteResolver
-};
-use Core\App;
+use Core\Component\Routing\{Router,RouteResolver};
 use Core\Component\Controller\ArgumentResolver;
 use Core\Component\Config\ConfigLoader;
-use Core\Component\Routing\Router;
+use Core\App;
 
 class AppFactory
 {
@@ -29,6 +25,7 @@ class AppFactory
             new ControllerResolver,
             new ArgumentResolver,
             new Router,
+            new EventEmitter,
             $this->configLoaderInstance(),
         );
     }
@@ -48,21 +45,6 @@ class AppFactory
 
     }
 
-
-    public function dbInstance()
-    {
-        if (self::$dbInstance === null) {
-
-            $configLoader = $this->configLoaderInstance();
-            $dbConfig = $configLoader->get('db');
-            extract($dbConfig);
-
-            self::$dbInstance = new PDOStorage($dsn,$username,$password,$options);
-        }
-
-        return self::$dbInstance;
-
-    }
 
 
 }

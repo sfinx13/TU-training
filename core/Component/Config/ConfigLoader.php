@@ -9,6 +9,7 @@ class ConfigLoader implements ConfigLoaderInterface
     public const VIEW_INDEX = 'views';
     public const ROUTE_INDEX = 'routes';
     public const DB_INDEX = 'db';
+    public const EVENT_INDEX = 'events';
 
     private $config = [];
 
@@ -39,6 +40,20 @@ class ConfigLoader implements ConfigLoaderInterface
 
         return $this->config[self::VIEW_INDEX][$key];
 
+    }
+
+    public function events(string $key = null)
+    {
+
+        if (!isset($this->config[self::EVENT_INDEX])) {
+            throw new ConfigLoaderException('events is not defined in config/app.php');
+        }
+
+        if ($key !== null && !isset($this->config[self::EVENT_INDEX][$key])) {
+            throw new ConfigLoaderException('"' . $key .'" is not defined in events');
+        }
+
+        return $this->config[self::EVENT_INDEX][$key];
     }
 
     public function routes(string $key = null)

@@ -40,7 +40,6 @@ class Route
         return $this->regex;
     }
 
-
     public function getParams(): array
     {
         return $this->params;
@@ -70,13 +69,11 @@ class Route
         return $this;
     }
 
-
     public function setParams(array $params): self
     {
         $this->params = $params;
         return $this;
     }
-
 
 
 }
