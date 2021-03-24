@@ -17,6 +17,7 @@
     },
     "require": {
         "phpunit/phpunit": "^9.5",
-        "symfony/var-dumper": "^5.2"
+        "symfony/var-dumper": "^5.2",
+        "psr/container": "^2.0"
     }
 }
