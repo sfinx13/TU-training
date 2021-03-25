@@ -45,8 +45,7 @@ class App
     }
 
     public function run()
-    {   
-
+    {
         try{
 
             $eventEmitter = $this->eventEmitter;
