@@ -1,10 +1,19 @@
 {
     "name": "qamarh/tu-training",
     "description": "Repo pour entrainement sur les TU",
+    "license": "MIT",
     "authors": [
         {
             "name": "qamar-h",
             "email": "hayat.qamar@gmail.com"
+        },
+        {
+            "name": "sfinix13",
+            "email": "saidi@gmail.com"
+        },
+        {
+            "name": "ousamabenyounes",
+            "email": "benyounes.ousama@gmail.com"
         }
     ],
     "autoload": {
