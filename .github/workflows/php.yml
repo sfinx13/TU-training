@@ -21,7 +21,7 @@ jobs:
         extensions:  simplexml, dom, xml, xdebug, intl
 
     - name: Validate composer.json and composer.lock
-      run: composer validate --strict
+      run: composer validate
 
     - name: Cache Composer packages
       id: composer-cache
@@ -35,8 +35,19 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 
+
+    - name: Recreate autoload file
+      run: composer dump-autoload
+
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
+  
+    - name: Run test suite
+      run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit
+    
+    - name: Generate test coverage badge
+      uses: ./
+      with:
+        coverage_badge_path: 'badge.svg'
+        push_badge: true
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
