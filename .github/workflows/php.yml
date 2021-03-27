@@ -14,6 +14,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Setup PHP
+      uses: shivammathur/setup-php@2.9.0
+      with:
+        php-version: '7.4'
+        extensions:  simplexml, dom, xml, xdebug, intl
+
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
