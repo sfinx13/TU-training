@@ -48,7 +48,11 @@ class App
     {
         try{
 
+            $config = require_once PROJECT_DIR . '/config/app.php';
+            $this->configLoader->load($config);
+
             $eventEmitter = $this->eventEmitter;
+
             require_once $this->configLoader->events('path');
             $eventEmitter->emit('core.request',new RequestEvent($this->request));
 

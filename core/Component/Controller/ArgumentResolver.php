@@ -2,9 +2,9 @@
 
 namespace Core\Component\Controller;
 
-use Core\Component\Http\Factory\RequestFactory;
 use Core\Component\Http\Request;
 use Core\Component\Routing\Route;
+use Core\Component\Container\Container;
 
 class ArgumentResolver implements ArgumentResolverInterface
 {
@@ -45,7 +45,8 @@ class ArgumentResolver implements ArgumentResolverInterface
 
                     $class = new $class;
                     if ($class instanceof Request) {
-                        $class = RequestFactory::create();
+                        $container = new Container;
+                        $class = $container->get('core.request');
                     }
                     array_push($arg,$class);
                 }
