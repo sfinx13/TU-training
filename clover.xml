@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1616879367">
-  <project timestamp="1616879367">
+<coverage generated="1616879930">
+  <project timestamp="1616879930">
     <file name="/home/runner/work/TU-training/TU-training/core/App.php">
       <class name="Core\App" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="0" elements="34" coveredelements="0"/>
