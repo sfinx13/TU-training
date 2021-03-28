@@ -6,7 +6,7 @@ use Core\Component\ORM\DatabaseStorageInterface;
 use Core\Component\ORM\EntityInterface;
 use PDO;
 
-abstract class AbstractDataMapper 
+abstract class AbstractDataMapper
 {
     protected $databaseStorage;
 
@@ -21,11 +21,9 @@ abstract class AbstractDataMapper
 
     public function findById(int $id): ?EntityInterface
     {
-        $this->databaseStorage->select($this->table, [[
-            'column' => 'id',
-            'value' => $id,
-            'operator' => '='
-        ]]);
+        $this->databaseStorage->select($this->table, [
+            ['column' => 'id', 'value' => $id, 'operator' => '=']
+        ]);
 
         $row = $this->databaseStorage->fetch();
 
@@ -34,7 +32,7 @@ abstract class AbstractDataMapper
         }
 
         return null;
-
+        
     }
 
     public function findAll(array $criteria = []): array
@@ -42,8 +40,8 @@ abstract class AbstractDataMapper
         $this->databaseStorage->select($this->table, $criteria);
 
         return $this->databaseStorage->fetchAll(
-            null !== $this->entity ? \PDO::FETCH_CLASS : \PDO::FETCH_ASSOC , 
-            $this->entity);
+            null !== $this->entity ? \PDO::FETCH_CLASS : \PDO::FETCH_ASSOC,
+            $this->entity ?? null);
 
     }
 
