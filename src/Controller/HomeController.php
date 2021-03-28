@@ -12,7 +12,7 @@ class HomeController extends BaseController
     {
         $params = [
             'title' => 'Our framework',
-            'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+            'description' => 'A simple home-made PHP framework, in order to train in TU and good practice.'
         ];
     
         $this->renderFromTemplate("home/index",$params);
