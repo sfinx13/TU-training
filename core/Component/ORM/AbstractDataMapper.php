@@ -32,7 +32,6 @@ abstract class AbstractDataMapper
         }
 
         return null;
-        
     }
 
     public function findAll(array $criteria = []): array
@@ -42,7 +41,6 @@ abstract class AbstractDataMapper
         return $this->databaseStorage->fetchAll(
             null !== $this->entity ? \PDO::FETCH_CLASS : \PDO::FETCH_ASSOC,
             $this->entity ?? null);
-
     }
 
     abstract protected function createEntity(array $row): ?EntityInterface;

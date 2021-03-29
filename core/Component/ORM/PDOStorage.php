@@ -112,25 +112,25 @@ class PDOStorage implements DatabaseStorageInterface
     }
 
     /** @TODO for better developer experience create criteriaBuilder class instead of array */
-    public function select(string $table, array $criteria, string $operator = "AND") 
+    public function select(string $table, array $criteria, string $operator = "AND")
     {
         $parameters = [];
         $sqlWhereClause = '';
-        
-        if(!empty($criteria)) {
+
+        if (!empty($criteria)) {
 
             $where = [];
-            foreach($criteria as $criterion) {
-                $parameters[':'. $criterion['column']] = $criterion['value'];
-                $where[] = $criterion['column']. $criterion['operator'] . ':' . $criterion['column'];
+            foreach ($criteria as $criterion) {
+                $parameters[':' . $criterion['column']] = $criterion['value'];
+                $where[] = $criterion['column'] . $criterion['operator'] . ':' . $criterion['column'];
             }
 
-            $sqlWhereClause = ' WHERE ' . implode( ' ' . $operator .' ', $where);
+            $sqlWhereClause = ' WHERE ' . implode(' ' . $operator . ' ', $where);
         }
 
         return $this
-        ->prepare('SELECT * FROM '. $table. $sqlWhereClause)
-        ->execute($parameters);
+            ->prepare('SELECT * FROM ' . $table . $sqlWhereClause)
+            ->execute($parameters);
     }
 
     public function query(string $statement): PDOStatement
@@ -153,13 +153,13 @@ class PDOStorage implements DatabaseStorageInterface
 
     public function save(string $table)
     {
-         // @TODO
+        // @TODO
         return;
     }
 
     public function delete(string $table)
     {
-         // @TODO
+        // @TODO
         return;
     }
 

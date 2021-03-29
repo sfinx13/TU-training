@@ -14,11 +14,10 @@ class UserMapper extends AbstractDataMapper
 
     protected $entity = User::class;
 
-    protected function createEntity(array $row): ?EntityInterface 
+    protected function createEntity(array $row): ?EntityInterface
     {
         return (new User)
-        ->setFullname($row['fullname'])
-        ->setCreatedAt($row['created_at']);
+            ->setFullname($row['fullname'])
+            ->setCreatedAt($row['created_at']);
     }
-
 }
