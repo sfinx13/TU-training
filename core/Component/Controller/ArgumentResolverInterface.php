@@ -2,7 +2,7 @@
 
 namespace Core\Component\Controller;
 
-use Core\Component\Routing\Route;
+use QH\Routing\Route\Route;
 
 interface ArgumentResolverInterface
 {

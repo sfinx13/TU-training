@@ -3,7 +3,7 @@
 namespace Core\Component\EventEmitter\Event;
 
 use Core\Component\EventEmitter\Event;
-use Core\Component\Routing\Route;
+use QH\Routing\Route\Route;
 
 class RouteEvent extends Event
 {

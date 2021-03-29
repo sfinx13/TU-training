@@ -3,7 +3,7 @@
 namespace Core\Component\Controller;
 
 use Core\Component\Http\Request;
-use Core\Component\Routing\Route;
+use QH\Routing\Route\Route;
 use Core\Component\Container\Container;
 
 class ArgumentResolver implements ArgumentResolverInterface

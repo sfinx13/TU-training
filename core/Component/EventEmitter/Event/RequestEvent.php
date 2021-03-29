@@ -3,7 +3,7 @@
 namespace Core\Component\EventEmitter\Event;
 
 use Core\Component\EventEmitter\Event;
-use Core\Component\Http\Interfaces\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 class RequestEvent extends Event
 {

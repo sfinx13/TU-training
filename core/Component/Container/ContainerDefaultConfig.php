@@ -9,10 +9,10 @@ class ContainerDefaultConfig
     {
         return [
             'core.router' => [
-                'class' => \Core\Component\Routing\Router::class,
+                'class' => \QH\Routing\Router\Router::class,
             ],
             'core.route.resolver' => [
-                'class' => \Core\Component\Routing\RouteResolver::class,
+                'class' => \QH\Routing\Route\RouteResolver::class,
             ],
             'core.controller.resolver' => [
                 'class' => \Core\Component\Controller\ControllerResolver::class,
@@ -39,13 +39,13 @@ class ContainerDefaultConfig
     public static function mapping()
     {
         return [
-            'Core\Component\Http\Interfaces\RequestInterface' => 'core.request',
+            'Psr\Http\Message\RequestInterface' => 'core.request',
             'Core\Component\Http\Interfaces\ResponseInterface' => 'core.response',
             'Core\Component\Controller\ControllerResolverInterface' => 'core.controller.resolver',
             'Core\Component\Controller\ArgumentResolverInterface' => 'core.controller.argument.resolver',
             'Core\Component\EventEmitter\EventEmitterInterface' => 'core.event.emitter',
-            'Core\Component\Routing\RouterInterface' => 'core.router',
-            'Core\Component\Routing\RouteResolverInterface' => 'core.route.resolver',
+            'QH\Routing\Router\RouterInterface' => 'core.router',
+            'QH\Routing\Route\RouteResolverInterface' => 'core.route.resolver',
             'Core\Component\Config\ConfigLoaderInterface' => 'core.config.loader',
         ];
     }

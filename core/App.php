@@ -4,14 +4,16 @@ namespace Core;
 
 use Core\Component\EventEmitter\Event\{ArgumentEvent, ControllerEvent, RequestEvent, ResponseEvent, RouteEvent};
 use Core\Component\EventEmitter\EventEmitterInterface;
+use Core\Component\Http\ErrorViewHandler;
 use Core\Component\Http\Response;
 use Core\Component\Config\ConfigLoader;
-use Core\Component\Routing\RouteException;
 use Core\Component\Controller\ControllerException;
-use Core\Component\Http\Interfaces\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 use Core\Component\Controller\ArgumentResolverInterface;
 use Core\Component\Controller\ControllerResolverInterface;
-use Core\Component\Routing\{RouteResolverInterface, RouterInterface};
+use QH\Routing\Route\RouteException;
+use QH\Routing\Router\RouterInterface;
+use QH\Routing\Route\RouteResolverInterface;
 
 
 class App 
@@ -60,6 +62,7 @@ class App
             require_once $this->configLoader->routes('path');
 
             $route = $this->routeResolver->resolve($this->request,$router);
+
             $eventEmitter->emit('core.route',new RouteEvent($route));
 
             $controller = $this->controllerResolver->resolve($route);
@@ -71,24 +74,19 @@ class App
             call_user_func_array($controller,$arguments);
 
         }
-        catch(\Exception $e) {
-
-            $message = $e->getMessage();
-
-            $projectDir = str_replace('/public','',$_SERVER['DOCUMENT_ROOT']);
-            $errorViews = $projectDir . '/core/views/errors/' . $e->getCode() . '.php';
-
-            if (file_exists($errorViews)) {
-                ob_start();
-                    include_once $errorViews;
-                    $message = ob_get_contents();
-                    ob_clean();
-                ob_flush();
+        catch (RouteException $e) {
+            if($this->request->getUri() == "/") {
+                call_user_func([new \Core\Component\Controller\DefaultController,'index']);
+                return;
             }
-
+            $message = ErrorViewHandler::show($e);
             print(new Response($message,$e->getCode()));
-
         }
+        catch(\Exception $e) {
+            $message = ErrorViewHandler::show($e);
+            print(new Response($message,$e->getCode()));
+        }
+
 
     }
 
