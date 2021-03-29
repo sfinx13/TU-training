@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1617018802">
-  <project timestamp="1617018802">
+<coverage generated="1617020315">
+  <project timestamp="1617020315">
     <file name="/home/runner/work/TU-training/TU-training/core/App.php">
       <class name="Core\App" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="34" coveredstatements="0" elements="36" coveredelements="0"/>
@@ -472,23 +472,26 @@
     </file>
     <file name="/home/runner/work/TU-training/TU-training/core/Component/ORM/AbstractDataMapper.php">
       <class name="Core\Component\ORM\AbstractDataMapper" namespace="global">
-        <metrics complexity="5" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="0" elements="14" coveredelements="0"/>
+        <metrics complexity="6" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
       </class>
       <line num="17" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="19" type="stmt" count="0"/>
       <line num="20" type="stmt" count="0"/>
       <line num="22" type="method" name="findById" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="24" type="stmt" count="0"/>
-      <line num="26" type="stmt" count="0"/>
-      <line num="28" type="stmt" count="0"/>
+      <line num="25" type="stmt" count="0"/>
+      <line num="27" type="stmt" count="0"/>
       <line num="29" type="stmt" count="0"/>
-      <line num="32" type="stmt" count="0"/>
-      <line num="35" type="method" name="findAll" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="37" type="stmt" count="0"/>
-      <line num="39" type="stmt" count="0"/>
+      <line num="30" type="stmt" count="0"/>
+      <line num="33" type="stmt" count="0"/>
+      <line num="36" type="method" name="findAll" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="38" type="stmt" count="0"/>
       <line num="40" type="stmt" count="0"/>
       <line num="41" type="stmt" count="0"/>
-      <metrics loc="46" ncloc="46" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="0" elements="14" coveredelements="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="45" type="method" name="getTable" visibility="private" complexity="1" crap="2" count="0"/>
+      <line num="47" type="stmt" count="0"/>
+      <line num="49" type="stmt" count="0"/>
+      <metrics loc="54" ncloc="54" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/TU-training/TU-training/core/Component/ORM/DatabaseStorageInterface.php">
       <metrics loc="29" ncloc="29" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
@@ -837,6 +840,6 @@
       <line num="13" type="stmt" count="0"/>
       <metrics loc="14" ncloc="14" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="2" coveredelements="0"/>
     </file>
-    <metrics files="47" loc="1796" ncloc="1766" classes="33" methods="111" coveredmethods="21" conditionals="0" coveredconditionals="0" statements="465" coveredstatements="113" elements="576" coveredelements="134"/>
+    <metrics files="47" loc="1804" ncloc="1774" classes="33" methods="112" coveredmethods="21" conditionals="0" coveredconditionals="0" statements="467" coveredstatements="113" elements="579" coveredelements="134"/>
   </project>
 </coverage>
