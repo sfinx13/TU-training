@@ -6,6 +6,8 @@ use PDOStatement;
 
 class PDOStorage implements DatabaseStorageInterface
 {
+    const TYPE_INTEGER = 'integer';
+
     private $config = [];
 
     private $connection;
@@ -111,6 +113,15 @@ class PDOStorage implements DatabaseStorageInterface
         return $this->connection->lastInsertedId($name);
     }
 
+    public function setFetchMode(int $fetchMode = \PDO::FETCH_ASSOC, string $className = null): bool
+    {
+        if ($fetchMode === \PDO::FETCH_CLASS && $className === null) {
+            throw new \Exception('Please add className parameter');
+        }
+
+        return $this->getStatement()->setFetchMode($fetchMode, $className);
+    }
+
     /** @TODO for better developer experience create criteriaBuilder class instead of array */
     public function select(string $table, array $criteria, string $operator = "AND")
     {
@@ -120,9 +131,10 @@ class PDOStorage implements DatabaseStorageInterface
         if (!empty($criteria)) {
 
             $where = [];
-            foreach ($criteria as $criterion) {
-                $parameters[':' . $criterion['column']] = $criterion['value'];
-                $where[] = $criterion['column'] . $criterion['operator'] . ':' . $criterion['column'];
+            foreach ($criteria as $column => $value) {
+                $parameters[':' . $column] = $value;
+                $operator = gettype($value) === self::TYPE_INTEGER ? ' = ' : ' LIKE ';
+                $where[] = $column . $operator. ':' . $column;
             }
 
             $sqlWhereClause = ' WHERE ' . implode(' ' . $operator . ' ', $where);

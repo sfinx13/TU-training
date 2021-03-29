@@ -21,9 +21,7 @@ abstract class AbstractDataMapper
 
     public function findById(int $id): ?EntityInterface
     {
-        $this->databaseStorage->select($this->table, [
-            ['column' => 'id', 'value' => $id, 'operator' => '=']
-        ]);
+        $this->databaseStorage->select($this->table, ['id' => $id]);
 
         $row = $this->databaseStorage->fetch();
 
