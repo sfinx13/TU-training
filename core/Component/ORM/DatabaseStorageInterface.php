@@ -12,7 +12,18 @@ interface DatabaseStorageInterface
 
     public function execute(array $parameters);
 
-    public function fetch(int $fetchMode, int $cursorOrientation, int $cursorOffset);
+    public function fetch(int $fetchMode = null, int $cursorOrientation = null, int $cursorOffset = null);
 
-    public function fetchAll(int $fetchMode);
+    public function fetchAll(int $fetchMode = null, $fetchArgument = null);
+
+    public function select(string $table, array $criteria, string $operator = "AND");
+
+    public function update(string $table, array $criteria);
+
+    public function insert(string $table, array $criteria);
+
+    public function save(string $table);
+
+    public function delete(string $table);
+
 }

@@ -2,8 +2,12 @@
 
 namespace Core\Component\ORM;
 
+use PDOStatement;
+
 class PDOStorage implements DatabaseStorageInterface
 {
+    const TYPE_INTEGER = 'integer';
+
     private $config = [];
 
     private $connection;
@@ -12,13 +16,12 @@ class PDOStorage implements DatabaseStorageInterface
 
     private $fetchMode = \PDO::FETCH_ASSOC;
 
-    public function __construct(string $dsn, string $username, string $password, array $options = [])
+    public function __construct(string $dsn, string $username = null, string $password = null, array $options = [])
     {
         $this->config['dsn'] = $dsn;
         $this->config['username'] = $username;
         $this->config['password'] = $password;
         $this->config['options'] = $options;
-
     }
 
     public function getStatement(): \PDOStatement
@@ -78,7 +81,7 @@ class PDOStorage implements DatabaseStorageInterface
         }
     }
 
-    public function fetch(int $fetchMode, int $cursorOrientation = null, int $cursorOffset = null): array
+    public function fetch(int $fetchMode = null, int $cursorOrientation = null, int $cursorOffset = null): array
     {
         if ($fetchMode === null) {
             $fetchMode = $this->fetchMode;
@@ -91,14 +94,14 @@ class PDOStorage implements DatabaseStorageInterface
         }
     }
 
-    public function fetchAll(int $fetchMode): array
+    public function fetchAll(int $fetchMode = null, $fetchArgument = null): array
     {
         if ($fetchMode === null) {
             $fetchMode = $this->fetchMode;
         }
 
         try {
-            return $this->getStatement()->fetchAll($fetchMode);
+            return $this->getStatement()->fetchAll($fetchMode, $fetchArgument);
         } catch (\PDOException $exception) {
             throw new \PDOException($exception->getMessage());
         }
@@ -109,4 +112,67 @@ class PDOStorage implements DatabaseStorageInterface
         $this->connect();
         return $this->connection->lastInsertedId($name);
     }
+
+    public function setFetchMode(int $fetchMode = \PDO::FETCH_ASSOC, string $className = null): bool
+    {
+        if ($fetchMode === \PDO::FETCH_CLASS && $className === null) {
+            throw new \Exception('Please add className parameter');
+        }
+
+        return $this->getStatement()->setFetchMode($fetchMode, $className);
+    }
+
+    /** @TODO for better developer experience create criteriaBuilder class instead of array */
+    public function select(string $table, array $criteria, string $operator = "AND")
+    {
+        $parameters = [];
+        $sqlWhereClause = '';
+
+        if (!empty($criteria)) {
+
+            $where = [];
+            foreach ($criteria as $column => $value) {
+                $parameters[':' . $column] = $value;
+                $operator = gettype($value) === self::TYPE_INTEGER ? ' = ' : ' LIKE ';
+                $where[] = $column . $operator. ':' . $column;
+            }
+
+            $sqlWhereClause = ' WHERE ' . implode(' ' . $operator . ' ', $where);
+        }
+
+        return $this
+            ->prepare('SELECT * FROM ' . $table . $sqlWhereClause)
+            ->execute($parameters);
+    }
+
+    public function query(string $statement): PDOStatement
+    {
+        $this->connect();
+        return $this->connection->query($statement);
+    }
+
+    public function insert(string $table, array $criteria)
+    {
+        // @TODO
+        return;
+    }
+
+    public function update(string $table, array $criteria)
+    {
+        // @TODO
+        return;
+    }
+
+    public function save(string $table)
+    {
+        // @TODO
+        return;
+    }
+
+    public function delete(string $table)
+    {
+        // @TODO
+        return;
+    }
+
 }
