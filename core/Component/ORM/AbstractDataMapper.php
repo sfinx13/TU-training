@@ -21,7 +21,8 @@ abstract class AbstractDataMapper
 
     public function findById(int $id): ?EntityInterface
     {
-        $this->databaseStorage->select($this->table, ['id' => $id]);
+
+        $this->databaseStorage->select($this->getTable(), ['id' => $id]);
 
         $row = $this->databaseStorage->fetch();
 
@@ -34,11 +35,18 @@ abstract class AbstractDataMapper
 
     public function findAll(array $criteria = []): array
     {
-        $this->databaseStorage->select($this->table, $criteria);
+        $this->databaseStorage->select($this->getTable(), $criteria);
 
         return $this->databaseStorage->fetchAll(
             null !== $this->entity ? \PDO::FETCH_CLASS : \PDO::FETCH_ASSOC,
             $this->entity ?? null);
+    }
+
+    private function getTable(): string
+    {
+      $parts = explode("\\", $this->entity);
+
+      return strtolower(end($parts));
     }
 
     abstract protected function createEntity(array $row): ?EntityInterface;
