@@ -10,8 +10,6 @@ abstract class AbstractDataMapper
 {
     protected $databaseStorage;
 
-    protected $table;
-
     protected $entity;
 
     public function __construct(DatabaseStorageInterface $databaseStorage)
