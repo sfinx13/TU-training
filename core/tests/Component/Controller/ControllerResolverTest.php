@@ -3,7 +3,7 @@
 namespace Core\Tests\Component\Controller;
 
 use Core\Component\Controller\ControllerResolver;
-use Core\Component\Routing\Route;
+use QH\Routing\Route\Route;
 use PHPUnit\Framework\TestCase;
 
 class ControllerResolverTest extends TestCase

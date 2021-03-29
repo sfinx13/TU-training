@@ -16,7 +16,7 @@ class ArgumentResolverTest extends TestCase
         parent::__construct($name, $data, $dataName);
 
         $this->defaultControllerMock = $this->createMock("Core\Component\Controller\DefaultController");
-        $this->routeMock = $route = $this->getMockBuilder('Core\Component\Routing\Route')
+        $this->routeMock = $route = $this->getMockBuilder('QH\Routing\Route\Route')
             ->disableOriginalConstructor()
             ->getMock();
     }
