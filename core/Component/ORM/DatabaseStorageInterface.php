@@ -18,7 +18,7 @@ interface DatabaseStorageInterface
 
     public function select(string $table, array $criteria, string $operator = "AND");
 
-    public function update(string $table, array $criteria);
+    public function update(string $table, array $sets, array $criteria = []);
 
     public function insert(string $table, array $criteria);
 
