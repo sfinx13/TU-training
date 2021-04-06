@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1617693310">
-  <project timestamp="1617693310">
+<coverage generated="1617695828">
+  <project timestamp="1617695828">
     <file name="/home/runner/work/TU-training/TU-training/core/App.php">
       <class name="Core\App" namespace="global">
         <metrics complexity="5" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="0" elements="34" coveredelements="0"/>
@@ -565,7 +565,7 @@
       <metrics loc="27" ncloc="27" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/TU-training/TU-training/core/Component/ORM/EntityInterface.php">
-      <metrics loc="11" ncloc="11" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      <metrics loc="10" ncloc="10" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/TU-training/TU-training/core/Component/ORM/PDOStorage.php">
       <class name="Core\Component\ORM\PDOStorage" namespace="global">
@@ -732,8 +732,7 @@
       <line num="156" type="method" name="buildUpdateQuery" visibility="private" complexity="1" crap="2" count="0"/>
       <line num="158" type="stmt" count="0"/>
       <line num="159" type="stmt" count="0"/>
-      <line num="162" type="stmt" count="0"/>
-      <metrics loc="161" ncloc="160" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="51" coveredstatements="0" elements="67" coveredelements="0"/>
+      <metrics loc="162" ncloc="161" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="51" coveredstatements="0" elements="67" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/TU-training/TU-training/core/Component/ORM/Transformer/DataTranformerInterface.php">
       <line num="8" type="stmt" count="0"/>
@@ -752,8 +751,7 @@
       <line num="15" type="stmt" count="0"/>
       <line num="16" type="stmt" count="0"/>
       <line num="19" type="stmt" count="0"/>
-      <line num="21" type="stmt" count="0"/>
-      <metrics loc="20" ncloc="20" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="9" coveredelements="0"/>
+      <metrics loc="21" ncloc="21" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="9" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/TU-training/TU-training/core/Component/ORM/Utils/ObjectComparator.php">
       <class name="Core\Component\ORM\Utils\ObjectComparator" namespace="global">
@@ -775,8 +773,7 @@
       <line num="36" type="stmt" count="0"/>
       <line num="37" type="stmt" count="0"/>
       <line num="43" type="stmt" count="0"/>
-      <line num="45" type="stmt" count="0"/>
-      <metrics loc="44" ncloc="36" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="16" coveredelements="0"/>
+      <metrics loc="45" ncloc="37" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="16" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/TU-training/TU-training/core/tests/Component/Controller/ArgumentResolverTest.php">
       <class name="Core\Tests\Component\Controller\ArgumentResolverTest" namespace="global">
@@ -900,6 +897,6 @@
       <line num="13" type="stmt" count="0"/>
       <metrics loc="14" ncloc="14" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="2" coveredelements="0"/>
     </file>
-    <metrics files="45" loc="1914" ncloc="1864" classes="32" methods="127" coveredmethods="16" conditionals="0" coveredconditionals="0" statements="518" coveredstatements="97" elements="645" coveredelements="113"/>
+    <metrics files="45" loc="1916" ncloc="1866" classes="32" methods="127" coveredmethods="16" conditionals="0" coveredconditionals="0" statements="518" coveredstatements="97" elements="645" coveredelements="113"/>
   </project>
 </coverage>
