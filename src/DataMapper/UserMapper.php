@@ -17,6 +17,7 @@ class UserMapper extends AbstractDataMapper
     protected function createEntity(array $row): ?EntityInterface
     {
         return (new User)
+            ->setId($row['id'])
             ->setFullname($row['fullname'])
             ->setCreatedAt($row['created_at']);
     }

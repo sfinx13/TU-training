@@ -4,6 +4,7 @@ namespace Core\Component\ORM;
 
 use PDOStatement;
 
+/* @todo handle dedicated exception */
 class PDOStorage implements DatabaseStorageInterface
 {
     const TYPE_INTEGER = 'integer';
@@ -61,7 +62,6 @@ class PDOStorage implements DatabaseStorageInterface
     public function prepare($sql, array $options = []): self
     {
         $this->connect();
-
         try {
             $this->statement = $this->connection->prepare($sql, $options);
 
@@ -95,14 +95,14 @@ class PDOStorage implements DatabaseStorageInterface
         }
     }
 
-    public function fetchAll(int $fetchMode = null, $fetchArgument = null): array
+    public function fetchAll(int $fetchMode = null): array
     {
         if ($fetchMode === null) {
             $fetchMode = $this->fetchMode;
         }
 
         try {
-            return $this->getStatement()->fetchAll($fetchMode, $fetchArgument);
+            return $this->getStatement()->fetchAll($fetchMode);
         } catch (\PDOException $exception) {
             throw new \PDOException($exception->getMessage());
         }
@@ -118,34 +118,9 @@ class PDOStorage implements DatabaseStorageInterface
         return $this->statement->rowCount();
     }
 
-    public function setFetchMode(int $fetchMode = \PDO::FETCH_ASSOC, string $className = null): bool
+    public function setFetchMode(int $fetchMode = \PDO::FETCH_ASSOC): bool
     {
-        if ($fetchMode === \PDO::FETCH_CLASS && $className === null) {
-            throw new \Exception('Please add className parameter');
-        }
-
-        return $this->getStatement()->setFetchMode($fetchMode, $className);
-    }
-
-    public function select(string $table, array $criteria, string $operator = "AND")
-    {
-        $parameters = [];
-        $sqlWhereClause = '';
-
-        if (!empty($criteria)) {
-            $where = [];
-            foreach ($criteria as $column => $value) {
-                $parameters[$column] = $value;
-                $operator = gettype($value) === self::TYPE_INTEGER ? ' = ' : ' LIKE ';
-                $where[] = $column . $operator . ':' . $column;
-            }
-
-            $sqlWhereClause = ' WHERE ' . implode(' ' . $operator . ' ', $where);
-        }
-
-        return $this
-            ->prepare('SELECT * FROM ' . $table . $sqlWhereClause)
-            ->execute($parameters);
+        return $this->getStatement()->setFetchMode($fetchMode);
     }
 
     public function query(string $statement): PDOStatement
@@ -154,60 +129,63 @@ class PDOStorage implements DatabaseStorageInterface
         return $this->connection->query($statement);
     }
 
-    public function insert(string $table, array $criteria)
+    public function select(string $table, array $criteria)
     {
-        $columns = implode("','", array_keys($criteria));
-        $values = implode(', :', array_keys($criteria));
 
-        $parameters = [];
+        $queryBuilder = (new QueryBuilder())->select()->from($table);
 
-        foreach ($criteria as $column => $value) {
-            $parameters[$column] = $value;
+        if (!empty($criteria)) {
+            $sql = $queryBuilder->where($criteria)->getQuery();
+        } else {
+            $sql = $queryBuilder->getQuery();
         }
 
-        $sql = "INSERT INTO $table ('{$columns}')  VALUES (:{$values})";
+        return $this->prepare($sql)->execute($queryBuilder->getParameters());
+    }
 
-        return $this->prepare($sql)->execute($parameters)->getLastInsertedId();
+    public function insert(string $table, array $criteria)
+    {
+        $queryBuilder = (new QueryBuilder())
+            ->insert()
+            ->into($table)
+            ->columns($criteria)
+            ->values($criteria);
+
+        return $this->prepare($queryBuilder->getQuery())
+            ->execute($queryBuilder->getParameters())
+            ->getLastInsertedId();
     }
 
     public function update(string $table, array $sets, array $criteria = [])
     {
-        $parameters = [];
-        $sqlWhereClause = '';
-
         if (empty($sets)) {
             return null;
         }
 
-        foreach ($sets as $column => $value) {
-            $parameters[$column] = $value;
-            $set[] = $column . ' = :' . $column;
-        }
+        $queryBuilder = (new QueryBuilder())->update($table)->set($sets);
 
         if (!empty($criteria)) {
-            foreach ($criteria as $column => $value) {
-                $parameters[':' . $column] = $value;
-                $operator = gettype($value) === self::TYPE_INTEGER ? ' = ' : ' LIKE ';
-                $where[] = $column . $operator . ':' . $column;
-            }
-            $sqlWhereClause = ' WHERE ' . implode(' ' . $operator . ' ', $where);
+            $queryBuilder->where($criteria);
         }
 
-        $sql = 'UPDATE ' . $table . ' SET ' . implode(',', $set) . $sqlWhereClause;
-
-        return $this->prepare($sql)->execute($parameters)->getRowCount();
+        return $this
+            ->prepare($queryBuilder->getQuery())
+            ->execute($queryBuilder->getParameters())
+            ->getRowCount();
     }
 
-    public function save(string $table)
+    public function delete(string $table, array $criteria = [])
     {
-        // @TODO
-        return;
-    }
+        if (empty($criteria)) {
+            return null;
+        }
 
-    public function delete(string $table)
-    {
-        // @TODO
-        return;
+        $queryBuilder = new QueryBuilder();
+        $sql = $queryBuilder
+            ->delete()->from($table)
+            ->where($criteria)->getQuery();
+
+        return $this->prepare($sql)->execute($queryBuilder->getParameters())->getRowCount();
     }
 
 }

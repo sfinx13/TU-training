@@ -17,6 +17,12 @@ class User implements EntityInterface
         return $this->id;
     }
 
+    public function setId($id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     public function getFullname()
     {
         return $this->fullname;
