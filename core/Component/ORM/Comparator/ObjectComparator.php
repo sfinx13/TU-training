@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Component\ORM\Utils;
+namespace Core\Component\ORM\Comparator;
 
 use ReflectionObject;
 use InvalidArgumentException;

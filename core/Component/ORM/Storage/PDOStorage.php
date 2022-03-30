@@ -1,13 +1,13 @@
 <?php
 
-namespace Core\Component\ORM;
+namespace Core\Component\ORM\Storage;
 
-use PDOStatement;
+use Core\Component\ORM\QueryBuilder;
+use Core\Component\ORM\DatabaseStorageInterface;
 
-/* @todo handle dedicated exception */
 class PDOStorage implements DatabaseStorageInterface
 {
-    const TYPE_INTEGER = 'integer';
+    public const TYPE_INTEGER = 'integer';
 
     private array $config = [];
 
@@ -40,18 +40,14 @@ class PDOStorage implements DatabaseStorageInterface
             return;
         }
 
-        try {
-            $this->connection = new \PDO(
-                $this->config['dsn'],
-                $this->config['username'],
-                $this->config['password'],
-                $this->config['options']
-            );
+        $this->connection = new \PDO(
+            $this->config['dsn'],
+            $this->config['username'],
+            $this->config['password'],
+            $this->config['options']
+        );
 
-            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        } catch (\PDOException $exception) {
-            throw new \PDOException($exception->getMessage());
-        }
+        $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     public function disconnect(): void
@@ -62,24 +58,14 @@ class PDOStorage implements DatabaseStorageInterface
     public function prepare($sql, array $options = []): self
     {
         $this->connect();
-        try {
-            $this->statement = $this->connection->prepare($sql, $options);
-
-            return $this;
-        } catch (\PDOException $exception) {
-            throw new \PDOException($exception->getMessage());
-        }
+        $this->statement = $this->connection->prepare($sql, $options);
+        return $this;
     }
 
     public function execute(array $parameters): self
     {
-        try {
-            $this->getStatement()->execute($parameters);
-
-            return $this;
-        } catch (\PDOException $exception) {
-            throw new \PDOException($exception->getMessage());
-        }
+        $this->getStatement()->execute($parameters);
+        return $this;
     }
 
     public function fetch(int $fetchMode = null, int $cursorOrientation = null, int $cursorOffset = null): array
@@ -88,11 +74,7 @@ class PDOStorage implements DatabaseStorageInterface
             $fetchMode = $this->fetchMode;
         }
 
-        try {
-            return $this->getStatement()->fetch($fetchMode, $cursorOrientation, $cursorOffset);
-        } catch (\PDOException $exception) {
-            throw new \PDOException($exception->getMessage());
-        }
+        return $this->getStatement()->fetch($fetchMode, $cursorOrientation, $cursorOffset);
     }
 
     public function fetchAll(int $fetchMode = null): array
@@ -101,11 +83,7 @@ class PDOStorage implements DatabaseStorageInterface
             $fetchMode = $this->fetchMode;
         }
 
-        try {
-            return $this->getStatement()->fetchAll($fetchMode);
-        } catch (\PDOException $exception) {
-            throw new \PDOException($exception->getMessage());
-        }
+        return $this->getStatement()->fetchAll($fetchMode);
     }
 
     public function getLastInsertedId($name = null): string
@@ -123,7 +101,7 @@ class PDOStorage implements DatabaseStorageInterface
         return $this->getStatement()->setFetchMode($fetchMode);
     }
 
-    public function query(string $statement): PDOStatement
+    public function query(string $statement): \PDOStatement
     {
         $this->connect();
         return $this->connection->query($statement);
@@ -131,7 +109,6 @@ class PDOStorage implements DatabaseStorageInterface
 
     public function select(string $table, array $criteria)
     {
-
         $queryBuilder = (new QueryBuilder())->select()->from($table);
 
         if (!empty($criteria)) {
@@ -187,5 +164,4 @@ class PDOStorage implements DatabaseStorageInterface
 
         return $this->prepare($sql)->execute($queryBuilder->getParameters())->getRowCount();
     }
-
 }

@@ -2,11 +2,9 @@
 
 namespace App\DataMapper;
 
+use App\Entity\User;
 use Core\Component\ORM\AbstractDataMapper;
 use Core\Component\ORM\EntityInterface;
-use App\Entity\User;
-use Core\Component\ORM\PDOStorage;
-use Core\Component\ORM\DatabaseStorageInterface;
 
 class UserMapper extends AbstractDataMapper
 {

@@ -2,9 +2,8 @@
 
 namespace Core\Component\ORM;
 
-use Core\Component\ORM\Transformer\FieldToCamelCaseTransformer;
-use Core\Component\ORM\Utils\ObjectComparator;
-use PDO;
+use Core\Component\ORM\NameConverter\FieldToCamelCaseStringConverter;
+use Core\Component\ORM\Comparator\ObjectComparator;
 
 abstract class AbstractDataMapper
 {
@@ -75,7 +74,7 @@ abstract class AbstractDataMapper
         foreach ($properties as $property) {
             $property->setAccessible(true);
             if ($property->getName() !== EntityInterface::FIELD_ID) {
-                $criteria[FieldToCamelCaseTransformer::transform($property->getName())] = $property->getValue($entity);
+                $criteria[FieldToCamelCaseStringConverter::normalize($property->getName())] = $property->getValue($entity);
             }
         }
 
@@ -87,7 +86,7 @@ abstract class AbstractDataMapper
         $sets = [];
 
         foreach ($valuesChanges as $column => $valueChange) {
-            $sets[FieldToCamelCaseTransformer::transform($column)] = $valueChange['new_value'];
+            $sets[FieldToCamelCaseStringConverter::normalize($column)] = $valueChange['new_value'];
         }
 
         return $this->databaseStorage->update($this->getTable(), $sets, ['id' => $entity->getId()]);
@@ -101,5 +100,4 @@ abstract class AbstractDataMapper
     }
 
     abstract protected function createEntity(array $row): ?EntityInterface;
-
 }

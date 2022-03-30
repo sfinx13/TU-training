@@ -1,10 +1,10 @@
 <?php
 
-namespace Core\Component\ORM\Transformer;
+namespace Core\Component\ORM\NameConverter;
 
-class FieldToCamelCaseTransformer implements DataTranformerInterface
+class FieldToCamelCaseStringConverter implements StringConverterInterface
 {
-    static public function transform($value): string
+    public static function normalize($value): string
     {
         $pattern = '!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!';
         preg_match_all($pattern, $value, $matches);

@@ -1,10 +1,10 @@
 <?php
 
 namespace Core\Component\ORM;
- 
-interface EntityInterface 
+
+interface EntityInterface
 {
-    const FIELD_ID = 'id';
+    public const FIELD_ID = 'id';
 
     public function getId(): int;
 }

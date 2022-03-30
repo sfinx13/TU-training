@@ -2,13 +2,14 @@
 
 namespace Core\Component\ORM;
 
-/* @todo handle exception */
+use Core\Component\ORM\Storage\PDOStorage;
+
 class QueryBuilder
 {
-    const SQL_COMMAND_SELECT = 'SELECT';
-    const SQL_COMMAND_INSERT = 'INSERT';
-    const SQL_COMMAND_UPDATE = 'UPDATE';
-    const SQL_COMMAND_DELETE = 'DELETE';
+    public const SQL_COMMAND_SELECT = 'SELECT';
+    public const SQL_COMMAND_INSERT = 'INSERT';
+    public const SQL_COMMAND_UPDATE = 'UPDATE';
+    public const SQL_COMMAND_DELETE = 'DELETE';
 
     private string $command;
 
@@ -158,5 +159,4 @@ class QueryBuilder
         return $this->command . ' '. $this->table . ' SET ' . implode(',', $this->set)
             . ' WHERE ' . implode(' AND  ', $this->where);
     }
-
 }

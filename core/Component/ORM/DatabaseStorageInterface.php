@@ -23,5 +23,4 @@ interface DatabaseStorageInterface
     public function insert(string $table, array $criteria);
 
     public function delete(string $table, array $criteria);
-
 }
